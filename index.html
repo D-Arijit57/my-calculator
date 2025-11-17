@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator Layout</title>
+    <!-- Importing Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Using Inter font as the default */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom styles for button active state for a nice press effect */
+        .calc-button:active {
+            transform: scale(0.95);
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 flex items-center justify-center min-h-screen">
+
+    <!-- Calculator Main Container -->
+    <div class="bg-black w-full max-w-xs mx-auto rounded-3xl shadow-2xl p-6 space-y-6">
+        
+        <!-- Calculator Display -->
+        <!-- This div will show the numbers and results -->
+        <div class="bg-gray-800 text-white p-6 rounded-2xl h-24 flex items-end justify-end">
+            <div class="text-5xl font-light" id="display"></div>
+        </div>
+
+        <!-- Calculator Buttons Grid -->
+        <div class="grid grid-cols-4 gap-4">
+            
+            <!-- Row 1 -->
+            <button id="btn-ac" onclick = "selection(`${id}`)" data-type="function" data-value="AC" class="calc-button bg-gray-400 text-black text-3xl font-medium rounded-full h-16 w-16 flex items-center justify-center transition-all duration-200 ease-in-out">AC</button>
+            <button id="btn-toggle-sign" data-type="function" data-value="+/-" class="calc-button bg-gray-400 text-black text-3xl font-medium rounded-full h-16 w-16 flex items-center justify-center transition-all duration-200 ease-in-out">+/-</button>
+            <button id="btn-percent" onclick ="selection(`${id}`)" data-type="operator" data-value="%" class="calc-button bg-gray-400 text-black text-3xl font-medium rounded-full h-16 w-16 flex items-center justify-center transition-all duration-200 ease-in-out">%</button>
+            <button id="btn-divide" onclick ="selection(`${id}`)" data-type="operator" data-value="/" class="calc-button bg-orange-500 hover:bg-orange-600 text-white text-3xl font-medium rounded-full h-16 w-16 flex items-center justify-center transition-all duration-200 ease-in-out">÷</button>
+
+            <!-- Row 2 -->
+            <button id="btn-7" data-type="number" onclick="selection(`${id}`)" data-value="7" class="calc-button bg-gray-700 hover:bg-gray-800 text-white text-3xl font-medium rounded-full h-16 w-16 flex items-center justify-center transition-all duration-200 ease-in-out">7</button>
+            <button id="btn-8" data-type="number" onclick="selection(`${id}`)" data-value="8" class="calc-button bg-gray-700 hover:bg-gray-800 text-white text-3xl font-medium rounded-full h-16 w-16 flex items-center justify-center transition-all duration-200 ease-in-out">8</button>
+            <button id="btn-9" data-type="number" onclick="selection(`${id}`)" data-value="9" class="calc-button bg-gray-700 hover:bg-gray-800 text-white text-3xl font-medium rounded-full h-16 w-16 flex items-center justify-center transition-all duration-200 ease-in-out">9</button>
+            <button id="btn-multiply" onclick ="selection(`${id}`)" data-type="operator" data-value="*" class="calc-button bg-orange-500 hover:bg-orange-600 text-white text-3xl font-medium rounded-full h-16 w-16 flex items-center justify-center transition-all duration-200 ease-in-out">×</button>
+
+            <!-- Row 3 -->
+            <button id="btn-4" data-type="number" onclick="selection(`${id}`)" data-value="4" class="calc-button bg-gray-700 hover:bg-gray-800 text-white text-3xl font-medium rounded-full h-16 w-16 flex items-center justify-center transition-all duration-200 ease-in-out">4</button>
+            <button id="btn-5" data-type="number" onclick="selection(`${id}`)" data-value="5" class="calc-button bg-gray-700 hover:bg-gray-800 text-white text-3xl font-medium rounded-full h-16 w-16 flex items-center justify-center transition-all duration-200 ease-in-out">5</button>
+            <button id="btn-6" data-type="number" onclick="selection( `${id}`)" data-value="6" class="calc-button bg-gray-700 hover:bg-gray-800 text-white text-3xl font-medium rounded-full h-16 w-16 flex items-center justify-center transition-all duration-200 ease-in-out">6</button>
+            <button id="btn-subtract" onclick ="selection(`${id}`)" data-type="operator" data-value="-" class="calc-button bg-orange-500 hover:bg-orange-600 text-white text-3xl font-medium rounded-full h-16 w-16 flex items-center justify-center transition-all duration-200 ease-in-out">−</button>
+
+            <!-- Row 4 -->
+            <button id="btn-1" data-type="number" onclick="selection(`${id}`)" data-value="1" class="calc-button bg-gray-700 hover:bg-gray-800 text-white text-3xl font-medium rounded-full h-16 w-16 flex items-center justify-center transition-all duration-200 ease-in-out">1</button>
+            <button id="btn-2" data-type="number" onclick="selection(`${id}`)" data-value="2" class="calc-button bg-gray-700 hover:bg-gray-800 text-white text-3xl font-medium rounded-full h-16 w-16 flex items-center justify-center transition-all duration-200 ease-in-out">2</button>
+            <button id="btn-3" data-type="number" onclick="selection(`${id}`)" data-value="3" class="calc-button bg-gray-700 hover:bg-gray-800 text-white text-3xl font-medium rounded-full h-16 w-16 flex items-center justify-center transition-all duration-200 ease-in-out">3</button>
+            <button id="btn-add" onclick="selection(`${id}`)" data-type="operator" data-value="+" class="calc-button bg-orange-500 hover:bg-orange-600 text-white text-3xl font-medium rounded-full h-16 w-16 flex items-center justify-center transition-all duration-200 ease-in-out">+</button>
+
+            <!-- Row 5 -->
+            <!-- Note: col-span-2 makes the '0' button span two columns -->
+            <button id="btn-0" data-type="number" onclick="selection(`${id}`)" data-value="0" class="calc-button bg-gray-700 hover:bg-gray-800 text-white text-3xl font-medium rounded-full h-16 flex items-center justify-start pl-6 col-span-2 transition-all duration-200 ease-in-out">0</button>
+            <button id="btn-decimal" onclick="selection(`${id}`)"data-type="decimal" data-value="." class="calc-button bg-gray-700 hover:bg-gray-800 text-white text-3xl font-medium rounded-full h-16 w-16 flex items-center justify-center transition-all duration-200 ease-in-out">.</button>
+            <button id="btn-equals" onclick = "selection(`${id}`)" data-type="function" data-value="=" class="calc-button bg-orange-500 hover:bg-orange-600 text-white text-3xl font-medium rounded-full h-16 w-16 flex items-center justify-center transition-all duration-200 ease-in-out">=</button>
+        </div>
+
+    </div>
+    <script src = "script.js"></script>
+</body>
+</html>
