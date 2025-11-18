@@ -119,6 +119,8 @@ function display(val){
 function equal_display(val){
     document.querySelector("#display").innerText = val;
 }
+// for now it can only handle two operands and a operator 
+// updating it constantly to increase the functionality 
 function solve(){
     // ---  testing code start ---
     console.log("this is operand stack");
