@@ -1,9 +1,8 @@
 // combining all the functionalities in a single selection function based on the value that is passed into the function
 let operandStack = [];
 let operatorStack = [];
-const peekOperator = operatorStack[operatorStack.length - 1];
-const peekOperand = operandStack[operandStack.length - 1];
-
+let tokenSequence = 0;
+let lastActionWasOperator = false; // Track if last action was an operator
 function selection (id){
     // better use a swtich case instead of set of 'if'myStack
     const clickedBtn = document.getElementById(id);
@@ -12,7 +11,11 @@ function selection (id){
     switch(type) {
         case "function":
             if(value === "AC"){
-                document.querySelector("#display").innerText = "";
+               document.querySelector("#display").innerText = "";
+               tokenSequence = 0;
+               operandStack = [];
+               operatorStack = [];
+               lastActionWasOperator = false; // Reset flag
                 break;
             }
             if(value === "+/-"){
@@ -23,50 +26,98 @@ function selection (id){
                 solve();
                 break;
             }
+            break;
         case "operator":
             // write down all the cases
             if(value === "+"){
-                document.querySelector("#display").innerText += value;
-                operatorStack.push(value);
+                operatorStack.push({
+                    type : "operator",
+                    val : value,
+                    tokenS : tokenSequence
+                });
+                tokenSequence++;
+                lastActionWasOperator = true; // Set flag
+                display(value);
                 break;
             }
             if(value === "-"){
-                document.querySelector("#display").innerText += value;operatorStack.push(value);
+               operatorStack.push({
+                    type : "operator",
+                    val : value,
+                    tokenS : tokenSequence
+                });
+                tokenSequence++;
+                lastActionWasOperator = true; // Set flag
+                display(value);
                 break;
             }
             if(value === "%"){
-                document.querySelector("#display").innerText += value;
-                operatorStack.push(value);
+                operatorStack.push({
+                    type : "operator",
+                    val : value,
+                    tokenS : tokenSequence
+                });
+                tokenSequence++;
+                lastActionWasOperator = true; // Set flag
+                display(value)
                 break;
             }
             if(value === "*"){
-                document.querySelector("#display").innerText += value;
-                operatorStack.push(value);
+                operatorStack.push({
+                    type : "operator",
+                    val : value,
+                    tokenS : tokenSequence
+                });
+                tokenSequence++;
+                lastActionWasOperator = true; // Set flag
+                display(value)
                 break;
             }
             if(value === "/"){
-                document.querySelector("#display").innerText += value;
-                operatorStack.push(value);
+                operatorStack.push({
+                    type : "operator",
+                    val : value,
+                    tokenS : tokenSequence
+                });
+                tokenSequence++;
+                lastActionWasOperator = true; // Set flag
+                display(value)
                 break;
             }
-            if(value === "."){
-                document.querySelector("#display").innerText += value;
+            if(value === "."){ // somehow add this to numbers to create decimal numbers
+                display(value);
                 break;
             }
             break;
         case "number":
-            document.querySelector("#display").innerText += value;
-            operandStack.push(value);
-            break;
-        case "decimal":
-            document.querySelector("#display").innerText += value;
+           const digit = value 
+           const last = operandStack[operandStack.length - 1];
+           // If last action was an operator, start a fresh number token
+           if(last && last.type == "number" && !lastActionWasOperator){
+            last.val = last.val + digit;
+           }
+           else{
+            operandStack.push({
+                type : "number",
+                val : digit,
+                tokenS : tokenSequence++
+            })
+           }
+           lastActionWasOperator = false; // Reset flag after number entry
+           display(digit);
+           break;
+    const peekOperator = operatorStack[operatorStack.length - 1];
+    const peekOperand = operandStack[operandStack.length - 1];
     }
 }
 // instead of pushiing the entire expression in the stack
 // try to maintain a token array where each token specify its type of token 
 // it coould be number or a operator 
+function display(val){
+    document.querySelector("#display").innerText += val;
+}
 function solve(){
-    // ---  testing code to check if the operators and elements pushed correctly  --- 
+    // ---  testing code start ---
     console.log("this is operand stack");
     for(let i = 0 ; i < operandStack.length ; i++){
         console.log(operandStack[i]);
@@ -75,5 +126,7 @@ function solve(){
     for(let i = 0 ; i < operatorStack.length ; i++){
         console.log(operatorStack[i]);
     }   
+    // --- testing code end ----
+    
 }
 
