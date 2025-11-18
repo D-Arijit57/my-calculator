@@ -130,27 +130,40 @@ function solve(){
         console.log(operatorStack[i]);
     }   
     // --- testing code end ----
+    let num1 = 0;
+    let num2 = 0;
     for(let i = 0; i < operandStack.length - 1; i++){
         let res = 0;
         const Op = operatorStack[operatorStack.length - 1];
         // console.log(Op.val); // testing code 
         switch(Op.val){
             case "+":
-                let obj1 = operandStack.pop();
-                let num1 = parseInt(obj1.val);
+                num1 = parseInt(operandStack.pop().val);
                 // console.log((num1)); // testing code 
-                let obj2 = operandStack.pop();
-                let num2 = parseInt(obj2.val);
-                operatorStack.pop()
-                res = num1 + num2;
+                num2 = parseInt(operandStack.pop().val);
+                operatorStack.pop();
+                res = num2 + num1;
                 operandStack.push({
                     type : "number",
                     val : res,
                     tokenSequence : tokenSequence + 1
                 });
                 equal_display(res);
-                console.log(operandStack);
+                console.log(operandStack); // testing code 
                 break;
+            case "-":
+                num1 = parseInt(operandStack.pop().val);
+                num2 = parseInt(operandStack.pop().val);
+                operatorStack.pop();
+                res = num2 - num1;
+                operandStack.push({
+                    type : "number",
+                    val: res,
+                    tokenSequence : tokenSequence + 1
+                });
+                equal_display(res);
+                console.log(operandStack); // testing code 
+                break; 
         }
         }
     }
