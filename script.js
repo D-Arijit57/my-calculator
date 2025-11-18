@@ -93,7 +93,7 @@ function selection (id){
            const digit = value 
            const last = operandStack[operandStack.length - 1];
            // If last action was an operator, start a fresh number token
-           if(last && last.type == "number" && !lastActionWasOperator){
+           if(last && !lastActionWasOperator){
             last.val = last.val + digit;
            }
            else{
@@ -116,6 +116,9 @@ function selection (id){
 function display(val){
     document.querySelector("#display").innerText += val;
 }
+function equal_display(val){
+    document.querySelector("#display").innerText = val;
+}
 function solve(){
     // ---  testing code start ---
     console.log("this is operand stack");
@@ -127,6 +130,29 @@ function solve(){
         console.log(operatorStack[i]);
     }   
     // --- testing code end ----
-    
-}
+    for(let i = 0; i < operandStack.length - 1; i++){
+        let res = 0;
+        const Op = operatorStack[operatorStack.length - 1];
+        // console.log(Op.val); // testing code 
+        switch(Op.val){
+            case "+":
+                let obj1 = operandStack.pop();
+                let num1 = parseInt(obj1.val);
+                // console.log((num1)); // testing code 
+                let obj2 = operandStack.pop();
+                let num2 = parseInt(obj2.val);
+                operatorStack.pop()
+                res = num1 + num2;
+                operandStack.push({
+                    type : "number",
+                    val : res,
+                    tokenSequence : tokenSequence + 1
+                });
+                equal_display(res);
+                console.log(operandStack);
+                break;
+        }
+        }
+    }
+
 
